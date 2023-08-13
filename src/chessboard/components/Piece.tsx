@@ -165,6 +165,7 @@ export function Piece({
       targetSq: squares[targetSquare],
     };
   }
+
   return (
     <div
       ref={arePiecesDraggable ? (canDrag ? drag : null) : null}

@@ -5,6 +5,7 @@ import Chess from "chess.js";
 import { Chessboard, ClearPremoves } from "../src";
 import { CustomSquareProps, Square } from "../src/chessboard/types";
 import Engine from "./stockfish/engine";
+import { Console } from "console";
 
 // examples
 // multiboard example https://storybook.js.org/docs/react/writing-stories/stories-for-multiple-components
@@ -527,7 +528,6 @@ export const PremovesEnabled = () => {
       <Chessboard
         id="PremovesEnabled"
         arePremovesAllowed={true}
-        position={game.fen()}
         isDraggablePiece={({ piece }) => piece[0] === "w"}
         onPieceDrop={onDrop}
         customBoardStyle={{
@@ -573,6 +573,7 @@ export const PremovesEnabled = () => {
 ///////////////////////////////////
 ////////// Styled Board ///////////
 ///////////////////////////////////
+import ChessPiece from "./ChessPiece";
 export const StyledBoard = () => {
   const [game, setGame] = useState(new Chess());
 
@@ -595,6 +596,9 @@ export const StyledBoard = () => {
     return move;
   }
 
+
+  // Assuming you have already defined the ChessPiece component
+   
   const pieces = [
     "wP",
     "wN",
@@ -611,16 +615,17 @@ export const StyledBoard = () => {
   ];
   const customPieces = () => {
     const returnPieces = {};
-    pieces.map((p) => {
-      returnPieces[p] = ({ squareWidth }) => (
+    pieces.map((p, index) => {
+      returnPieces[p] = ({square}) => (
         <div
-          style={{
-            width: squareWidth,
-            height: squareWidth,
-            backgroundImage: `url(/${p}.png)`,
-            backgroundSize: "100%",
-          }}
-        />
+        style={{
+          backgroundImage: `url(${p})`,
+          backgroundSize: "100%",
+          width: "70px",
+        }} 
+        >
+          <ChessPiece color={p[0]} type={"r"} square={square}/>
+        </div>
       );
       return null;
     });
